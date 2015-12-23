@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html ng-app="HccsWebApp">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - HCCS</title>
+    @if (Request.IsAuthenticated)
+    {
+        @Styles.Render("~/Content/angularcss")
+    }
+    else
+    {
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    }
+    @RenderSection("style", required: false)
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    @if (!Request.IsAuthenticated)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("哈维中文学校", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (HttpContext.Current.Session["__CAMPUS"] != null)
+                        {
+                            <li>@Html.ActionLink("Calendar", "Calendar", "Home", routeValues: new { campus = HttpContext.Current.Session["__CAMPUS"].ToString() }, htmlAttributes: null)</li>
+                            <li>@Html.ActionLink("Curriculum", "Curriculum", "Home", routeValues: new { campus = HttpContext.Current.Session["__CAMPUS"].ToString() }, htmlAttributes: null)</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Calendar", "Calendar", "Home")</li>
+                            <li>@Html.ActionLink("Curriculum", "Curriculum", "Home")</li>
+                        }
+                        <li>@Html.ActionLink("About", "About", "Home")</li>/li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Howard County Chinese School</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+    }
+    else
+    {
+        <div id="wrapper" ng-cloak>
+            @Html.Partial("_Navigation")
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- /#page-wrapper -->
+        </div>
+            <!-- /#wrapper -->
+        @Scripts.Render("~/bundles/angular")
+    }
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,91 @@
+﻿@using Hccs.WebApp.Helpers
+@model Hccs.WebApp.Models.PersonForm
+@{
+    var person = Html.Angular().ModelFor("vm.person");
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @person.BindingFor(x => x.FirstName) <a href="" ng-click="vm.edit()"><i class="fa fa-edit"></i></a>
+        <div class="pull-right">
+            <a class="btn btn-default" href=""
+               ng-class="{active: vm.selectedView == 'details'}"
+               ng-click="vm.setView('details')">
+                <i class="fa fa-user"></i> Info
+            </a>
+            <a class="btn btn-green" href=""
+               ng-class="{active: vm.selectedView == 'opportunities'}"
+               ng-click="vm.setView('opportunities')">
+                <i class="fa fa-usd"></i> Opportunities
+            </a>
+            <a class="btn btn-red" href=""
+               ng-class="{active: vm.selectedView == 'risks'}"
+               ng-click="vm.setView('risks')">
+                <i class="fa fa-exclamation-triangle"></i>Risks
+            </a>
+        </div>
+    </div>
+    <table class="table" ng-show="vm.person.isAdult == 'true'">
+        
+        <tr class="info text-center">
+            <td colspan="4">
+                Adult
+            </td>
+        </tr>
+        <tr>
+            <th>Street</th>
+            <td colspan="3">@person.BindingFor(x => x.Street)</td>            
+        </tr>
+        <tr>
+            <th>City</th><td>@person.BindingFor(x => x.City)</td>
+            <th>Postal Code</th><td>@person.BindingFor(x => x.Zipcode)</td>
+        </tr>
+        <tr>
+            <th>E-mail</th>
+            <td>
+                Email: @person.BindingFor(x => x.Email)<br />
+                Receive School Email: @person.BindingFor(x => x.IsOnEmailList)
+            </td>
+            <th>Phone</th>
+            <td>
+                Office: @person.BindingFor(x => x.WorkPhone)<br />
+                Home: @person.BindingFor(x => x.HomePhone)<br />
+                Mobile: @person.BindingFor(x => x.CellPhone)
+            </td>
+        </tr>
+    </table>
+    <table class="table" ng-show="vm.person.isAdult != 'true'">
+
+        <tr class="info text-center">
+            <td colspan="4">
+                Child
+            </td>
+        </tr>
+        <tr>
+            <th>Date Of Birth</th>
+            <td colspan="3">@person.BindingFor(x => x.BirthDate)</td>
+        </tr>
+    </table>
+
+    @*<div class="panel-body enrollment-list" ng-show="vm.selectedView == 'enrollments'">
+        <div class="row">
+            <div class="col-md-1 half">
+                <span class="fa fa-2x fa-dollar text-success"></span>
+            </div>
+            <div class="col-md-11">
+                <p ng-show="@person.ExpressionFor(x => x.Enrollments.Count) == 0">There are no enrollment for this person.</p>
+                @using (var enrollment = person.Repeat(x => x.Enrollments, "enrollment"))
+                {
+                    <hr ng-hide="$index == 0" />
+                    <h3>
+                        @enrollment.BindingFor(x => x.Title)
+                    </h3>
+                    <p>@enrollment.BindingFor(x => x.Description)</p>
+                }
+                <p>
+                    <a class="add-btn" href="" ng-click="vm.addEnrollment()">Add a new enrollment</a>
+                </p>
+            </div>
+        </div>
+    </div>*@
+    
+</div>

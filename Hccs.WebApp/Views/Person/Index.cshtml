@@ -1,0 +1,99 @@
+﻿@model Hccs.WebApp.Models.PersonForm
+
+@{  ViewBag.Title = "Family Member"; }
+
+<h1>Update @ViewBag.Title</h1>
+<form novalidate name="vm.form" ng-controller="EditPersonController as vm" ng-submit="vm.Save()" style="max-width:500px">
+    <fieldset ng-disable="vm.saving">
+        <div class="alert alert-info" ng-show="vm.errorMessage == null && !vm.saving && !vm.success">
+            Make changes below.
+        </div>
+        <div class="alert alert-info" ng-show="vm.saving">
+            Saving changes...
+        </div>
+        <div class="alert alert-success" ng-show="vm.success">
+            <span class="fa fa-check"></span>
+            Changes saved!
+        </div>
+        <div class="alert alert-danger" ng-show="vm.errorMessage != null">
+            {{vm.errorMessage}}
+        </div>
+
+        <div class="form-group has-feedback">
+            <label class="control-label" for="FirstName">First Name</label>
+            <input required ng-model="vm.person.firstName"
+                   class="form-control" name="FirstName" type="text" placeholder="Your First name...">
+        </div>
+
+        <div class="form-group has-feedback">
+            <label class="control-label" for="MiddleName">Middle Name</label>
+            <input required ng-model="vm.person.middleName"
+                   class="form-control" name="MiddleName" type="text" placeholder="Your Middle name...">
+        </div>
+        <div class="form-group has-feedback">
+            <label class="control-label" for="LastName">Last Name</label>
+            <input required ng-model="vm.person.lastName"
+                   class="form-control" name="LastName" type="text" placeholder="Your Last name...">
+        </div>
+
+        <div class="form-group has-feedback">
+            <label class="control-label" for="ChineseName">Chinese Name</label>
+            <input required ng-model="vm.person.chineseName"
+                   class="form-control" name="ChineseName" type="text" placeholder="Your Chinese name...">
+        </div>
+
+        <div class="form-group has-feedback">
+            <label class="control-label" for="PersonType">Person Type</label>
+            <select required ng-model="vm.person.personType"
+                   class="form-control" name="PersonType">
+                <option value="0">Child</option>
+                <option value="1">Adult</option>
+            </select>
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==0">
+            <label class="control-label" for="BirthDate">Date of Birth</label>
+            <input required ng-model="vm.person.birthDate"
+                   class="form-control" name="BirthDate" type="date" >
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==1">
+            <label class="control-label" for="EmailAddress">Email Address</label>
+            <input required ng-model="vm.person.email"
+                   class="form-control" name="EmailAddress" type="email" placeholder="your@email.com...">
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==1">
+            <label class="control-label" for="HomePhone">Home Phone</label>
+            <input required ng-model="vm.person.homePhone"
+                   class="form-control" name="HomePhone" type="tel" placeholder="(443)111-1111">
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==1">
+            <label class="control-label" for="CellPone">Cell Phone</label>
+            <input required ng-model="vm.person.cellPhone"
+                   class="form-control" name="CellPhone" type="tel" placeholder="(443)111-1111">
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==1">
+            <label class="control-label" for="WorkPhone">Work Phone</label>
+            <input required ng-model="vm.person.workPhone"
+                   class="form-control" name="WorkPhone" type="tel" placeholder="(443)111-1111">
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==1">
+            <label class="control-label" for="Street">Street</label>
+            <input required ng-model="vm.person.street"
+                   class="form-control" name="Street" type="text" placeholder="Your street and number ...">
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==1">
+            <label class="control-label" for="City">City</label>
+            <input required ng-model="vm.person.city"
+                   class="form-control" name="City" type="text" placeholder="Your City">
+        </div>
+        <div class="form-group has-feedback" ng-show="vm.person.personType==1">
+            <label class="control-label" for="ZipCode">Postal Code</label>
+            <input required ng-model="vm.person.zipCode"
+                   class="form-control" name="ZipCode" type="text">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success">Save Changes</button>
+            <a class="btn btn-warning" href="/">Cancel</a>
+        </div>
+    </fieldset>
+</form>
