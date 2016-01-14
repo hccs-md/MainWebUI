@@ -1,5 +1,4 @@
-﻿using Hccs.WebApp.Core;
-using Hccs.WebApp.Infrastructures;
+﻿using Hccs.WebApp.Infrastructures;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;

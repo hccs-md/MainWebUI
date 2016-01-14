@@ -23,9 +23,8 @@ bld/
 [Oo]bj/
 
 # configuration
-web.config
-web.debug.config
-web.release.config
+Web.Secrets.config
+SecretConnectionStrings.config
 
 <<<<<<< HEAD
 # Visual Studio 2015 cache/options directory

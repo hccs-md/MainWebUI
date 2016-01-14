@@ -19,21 +19,25 @@ namespace Hccs.WebApp.Models
     // Must be expressed in terms of our custom Role and other types:
     public class ApplicationUser : IdentityUser<string, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public Person Person { get; set; }
+
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
 
             // Add any custom User properties/code here
-
+            Person = new Person
+            {
+                CreationDt = DateTime.UtcNow,
+                PersonType = 0
+            };
         }
 
         public string FullName
         {
             get
             {
-                return string.Concat(FirstName, ", ", LastName).Humanize(LetterCasing.Title);
+                return string.Concat(Person.FirstName, ", ", Person.LastName).Humanize(LetterCasing.Title);
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using Hccs.WebApp.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Hccs.WebApp.Data

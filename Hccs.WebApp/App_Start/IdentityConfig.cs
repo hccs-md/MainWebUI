@@ -90,7 +90,7 @@ namespace Hccs.WebApp
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.            
-            return GmailService.SendMail(message, "");
+            return GmailService.SendMail(message);
         }
     }
 
@@ -105,8 +105,8 @@ namespace Hccs.WebApp
 
     // This is useful if you do not want to tear down the database each time you run the application.
     // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
-    // This example shows you how to create a new database if the Model changes
-    public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+    // This example shows you how to create a new database if the Model changes    
+    public class ApplicationDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
@@ -121,20 +121,23 @@ namespace Hccs.WebApp
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "it@hccs-md.org";
             const string password = "Admin@123456";
-            const string roleName = "Admin";
-
+            string[] roles = new string[] { "Dean", "Teacher", "Admin" };
             //Create Role Admin if it does not exist
-            var role = roleManager.FindByName(roleName);
-            if (role == null)
+            foreach (string roleName in roles)
             {
-                role = new ApplicationRole(roleName);
-                var roleresult = roleManager.Create(role);
+                var role = roleManager.FindByName(roleName);
+                if (role == null)
+                {
+                    role = new ApplicationRole(roleName);
+                    var roleresult = roleManager.Create(role);
+                }
             }
-
+                       
             var user = userManager.FindByName(name);
             if (user == null)
             {
-                user = new ApplicationUser { UserName = name, Email = name, EmailConfirmed = true };
+                Person p = new Person { FirstName = "Fan", LastName = "Yang", ChineseName = "杨帆", Gender = "M", Email = name, CreationDt = DateTime.UtcNow, PersonType = 0};
+                user = new ApplicationUser { UserName = name, Email = name, EmailConfirmed = true, Person = p};
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
 
@@ -145,7 +148,7 @@ namespace Hccs.WebApp
 
             groupManager.CreateGroup(newGroup);
             groupManager.SetUserGroups(user.Id, new string[] { newGroup.Id });
-            groupManager.SetGroupRoles(newGroup.Id, new string[] { role.Name });
+            groupManager.SetGroupRoles(newGroup.Id, roles);
         }
     }
 

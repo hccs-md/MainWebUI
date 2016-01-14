@@ -8,8 +8,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Web.Mvc;
 using Hccs.WebApp.Models;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace Hccs.WebApp.Controllers
 {
@@ -76,12 +78,14 @@ namespace Hccs.WebApp.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    //var user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-                    //await _userManager.AddClaimAsync(User.Identity.GetUserId(), new Claim("FullName", user.FullName));
+                    //retrieve user information
+                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                    HttpContext.Session["__LOGGEDUSER"] = user.FullName;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -154,7 +158,8 @@ namespace Hccs.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.Phone, FirstName = model.FirstName, LastName = model.LastName };
+                var person = Mapper.Map<Person>(model);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.Phone, Person = person };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -166,7 +171,14 @@ namespace Hccs.WebApp.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    string campus = null;
+
+                    if(HttpContext.Session["__CAMPUS"] != null)
+                    {
+                        campus = HttpContext.Session["__CAMPUS"].ToString();
+                    }
+
+                    return this.RedirectToAction<HomeController>(c => c.Index(campus));
                 }
                 AddErrors(result);
             }
@@ -370,7 +382,8 @@ namespace Hccs.WebApp.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName= model.FirstName, LastName = model.LastName };
+                var person = new Person { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Person = person};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -395,7 +408,12 @@ namespace Hccs.WebApp.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            string campus = null;
+            if (HttpContext.Session["__CAMPUS"] != null)
+            {
+                campus = HttpContext.Session["__CAMPUS"].ToString();
+            }
+            return this.RedirectToAction<HomeController>(c => c.Index(campus));
         }
 
         //

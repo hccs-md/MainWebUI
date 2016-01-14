@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Hccs.WebApp.Core;
 using Hccs.WebApp.Infrastructures;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +23,7 @@ namespace Hccs.WebApp.Models
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
-        public PersonTypeEnum PersonType { get; set; }
+        public string PersonType { get; set; }
 
         public DateTime CreationDt { get; set; }
         [DataType(DataType.EmailAddress)]
@@ -51,8 +50,8 @@ namespace Hccs.WebApp.Models
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Person, PersonForm>()
-                .ForMember(d => d.PersonType, opt => opt.MapFrom(s => (PersonTypeEnum)s.PersonType))
-                .ForMember(d => d.IsNewStudent, opt => opt.MapFrom(s => s.IsNewStudent == 'Y'));
+                .ForMember(d => d.PersonType, opt => opt.MapFrom(s => s.PersonType))
+                .ForMember(d => d.IsNewStudent, opt => opt.MapFrom(s => s.IsNewStudent == "Y"));
         }
     }
 }

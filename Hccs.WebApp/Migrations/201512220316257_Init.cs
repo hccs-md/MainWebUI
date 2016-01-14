@@ -108,17 +108,46 @@ namespace Hccs.WebApp.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
+
+            CreateTable("dbo.People",
+                  c => new
+                  {
+                      Id = c.Int(nullable: false, identity: true),
+                      FirstName = c.String(nullable:false, maxLength:50),
+                      MiddleName = c.String(),
+                      LastName = c.String(nullable:false, maxLength:50),
+                      ChineseName = c.String(),
+                      Gender = c.Byte(),
+                      DateOfBirth = c.DateTime(),
+                      PersonType = c.Byte(),
+                      CreationDt = c.DateTime(defaultValue: DateTime.UtcNow),
+                      Email = c.String(maxLength: 256),
+                      isOnEmailList = c.Boolean(defaultValue: true),
+                      HomePhone = c.String(),
+                      WorkPhone = c.String(),
+                      CellPhone = c.String(),
+                      Street = c.String(),
+                      City = c.String(),
+                      PostalCode = c.String(),
+                      IsNewStudent = c.Boolean(),
+                      UserId = c.String(nullable: false, maxLength:128)
+                  })
+                  .PrimaryKey(t => t.Id)
+                  .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                  .Index(t => t.UserId);
         }
         
         public override void Down()
         {
+            
+            DropForeignKey("dbo.People", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.ApplicationUserGroups", "ApplicationGroupId", "dbo.ApplicationGroups");
             DropForeignKey("dbo.ApplicationGroupRoles", "ApplicationGroupId", "dbo.ApplicationGroups");
+            DropIndex("dbo.People", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -127,6 +156,7 @@ namespace Hccs.WebApp.Migrations
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.ApplicationUserGroups", new[] { "ApplicationGroupId" });
             DropIndex("dbo.ApplicationGroupRoles", new[] { "ApplicationGroupId" });
+            DropTable("dbo.People");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
@@ -135,6 +165,6 @@ namespace Hccs.WebApp.Migrations
             DropTable("dbo.ApplicationUserGroups");
             DropTable("dbo.ApplicationGroupRoles");
             DropTable("dbo.ApplicationGroups");
-        }
+        }       
     }
 }

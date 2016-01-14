@@ -1,0 +1,2342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HccsWebDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="AccountConfirmedDt" Type="datetime" />
+          <Property Name="AccountStatus" Type="smallint" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ConfirmationCode" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Campus">
+          <Key>
+            <PropertyRef Name="CampusID" />
+          </Key>
+          <Property Name="CampusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CampusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CampusAddress" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Classroom">
+          <Key>
+            <PropertyRef Name="ClassroomID" />
+          </Key>
+          <Property Name="ClassroomID" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="RoomNum" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Building" Type="nvarchar" MaxLength="16" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="CampusID" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="CourseNameEnglish" Type="nvarchar" MaxLength="64" />
+          <Property Name="CourseNameChinese" Type="nvarchar" MaxLength="256" />
+          <Property Name="CourseType" Type="smallint" Nullable="false" />
+          <Property Name="RegistrationFee" Type="money" />
+          <Property Name="Tuition" Type="money" />
+          <Property Name="Schoolyear" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="256" />
+          <Property Name="PreferredSeqNum" Type="int" />
+          <Property Name="NumOfUnits" Type="smallint" />
+          <Property Name="Minimumage" Type="int" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.dbo.Deadline' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Deadline">
+          <Key>
+            <PropertyRef Name="DeadlineType" />
+            <PropertyRef Name="DeadlineDt" />
+            <PropertyRef Name="Schoolyear" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+          </Key>
+          <Property Name="DeadlineType" Type="smallint" Nullable="false" />
+          <Property Name="DeadlineDt" Type="date" Nullable="false" />
+          <Property Name="Schoolyear" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduleID" Type="int" Nullable="false" />
+          <Property Name="InvoiceID" Type="int" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="RegistrationFeeAmount" Type="money" />
+          <Property Name="EnrollmentStartDate" Type="datetime" />
+          <Property Name="TuitionAmount" Type="money" />
+          <Property Name="TuitionProrate" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="MiddlewayTuitionDiscount" Type="money" />
+          <Property Name="EcOrTeacherTuitionDiscount" Type="money" />
+          <Property Name="FinalTuitionAmount" Type="money" />
+          <Property Name="TextbookAmount" Type="money" />
+          <Property Name="TextbookNeeded" Type="char" MaxLength="1" />
+          <Property Name="RefundOnDropRegFeeAmount" Type="money" />
+          <Property Name="RefundOnDropTuitionAmount" Type="money" />
+          <Property Name="RefundOnDropTextbookAmount" Type="money" />
+          <Property Name="HccAmount" Type="money" />
+          <Property Name="CcbcAmount" Type="money" />
+          <Property Name="RegistrationStatus" Type="smallint" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Hccsrole">
+          <Key>
+            <PropertyRef Name="HCCSRoleID" />
+          </Key>
+          <Property Name="HCCSRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="HccsRole" Type="smallint" Nullable="false" />
+          <Property Name="Schoolyear" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="HccsTitleEnglish" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="HccsTitleChinese" Type="nvarchar" MaxLength="64" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+          </Key>
+          <Property Name="InvoiceID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="InvoiceDt" Type="datetime" Nullable="false" />
+          <Property Name="Schoolyear" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="FamilyDiscountCount" Type="smallint" />
+          <Property Name="FamilyDiscount" Type="money" />
+          <Property Name="BilingualDiscountCount" Type="smallint" />
+          <Property Name="BilingualDiscount" Type="money" />
+          <Property Name="TotalInvoiceAmount" Type="money" />
+          <Property Name="PaymentStatus" Type="smallint" />
+          <Property Name="PaymentID" Type="int" />
+          <Property Name="PaymentDt" Type="datetime" />
+          <Property Name="PaymentAmount" Type="money" />
+          <Property Name="RefundOnDropFamilyDsctAmount" Type="money" />
+          <Property Name="RefundOnDropBilingualDsctAmount" Type="money" />
+          <Property Name="TotalBalanceAmount" Type="money" />
+          <Property Name="InvoiceNotes" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentUID" />
+          </Key>
+          <Property Name="PaymentUID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="ObligationID" Type="int" />
+          <Property Name="PaymentMethod" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Checknum" Type="nvarchar" MaxLength="128" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="256" />
+          <Property Name="ReceiveDate" Type="datetime" />
+          <Property Name="ProcessedDate" Type="datetime" />
+          <Property Name="Processed" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Confirmed" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ConfirmedDate" Type="datetime" />
+          <Property Name="ConfirmedByID" Type="int" />
+          <Property Name="CampusID" Type="int" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="16" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="16" />
+          <Property Name="ChineseName" Type="nvarchar" MaxLength="32" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="PersonType" Type="int" Nullable="false" />
+          <Property Name="CreationDt" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsOnEmailList" Type="char" MaxLength="1" />
+          <Property Name="HomePhone" Type="nvarchar" MaxLength="16" />
+          <Property Name="WorkPhone" Type="nvarchar" MaxLength="16" />
+          <Property Name="CellPhone" Type="nvarchar" MaxLength="16" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="16" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="256" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="256" />
+          <Property Name="City" Type="nvarchar" MaxLength="32" />
+          <Property Name="State" Type="nvarchar" MaxLength="16" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="16" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="IsNewStudent" Type="char" MaxLength="1" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Refund">
+          <Key>
+            <PropertyRef Name="RefundID" />
+          </Key>
+          <Property Name="RefundID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="Checknum" Type="nvarchar" MaxLength="128" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="256" />
+          <Property Name="ProcessedDate" Type="datetime" Nullable="false" />
+          <Property Name="Processed" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="nvarchar" MaxLength="16" />
+          <Property Name="ClassroomID" Type="nvarchar" MaxLength="16" />
+          <Property Name="HccsRoleID" Type="int" Nullable="false" />
+          <Property Name="TextbookID" Type="int" />
+          <Property Name="SchoolYear" Type="int" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" />
+          <Property Name="ClassNameEnglish" Type="nvarchar" MaxLength="32" />
+          <Property Name="ClassNameChinese" Type="nvarchar" MaxLength="256" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="ClassTime" Type="nvarchar" MaxLength="128" />
+          <Property Name="Classstarttime" Type="money" />
+          <Property Name="Classendtime" Type="money" />
+          <Property Name="WaitinglistLimit" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <EntityType Name="Textbook">
+          <Key>
+            <PropertyRef Name="TextbookID" />
+          </Key>
+          <Property Name="TextbookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookTitleEnglish" Type="nvarchar" MaxLength="32" />
+          <Property Name="BookTitleChinese" Type="nvarchar" MaxLength="256" />
+          <Property Name="BookVersionEnglish" Type="nvarchar" MaxLength="32" />
+          <Property Name="BookVersionChinese" Type="nvarchar" MaxLength="64" />
+          <Property Name="UnitPrice" Type="money" />
+          <Property Name="Description" Type="nvarchar" MaxLength="256" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Account' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Account">
+          <Key>
+            <PropertyRef Name="h_Account_id" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="AccountStatus" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="ConfirmationCode" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="AccountConfirmedDt" Type="datetime" />
+          <Property Name="AccountStatus" Type="smallint" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ConfirmationCode" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Campus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Classroom' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Course' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Deadline' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Enrollment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Enrollment">
+          <Key>
+            <PropertyRef Name="h_Enrollment_id" />
+            <PropertyRef Name="EnrollmentID" />
+            <PropertyRef Name="ScheduleID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="RegistrationStatus" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Enrollment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EnrollmentID" Type="int" Nullable="false" />
+          <Property Name="ScheduleID" Type="int" Nullable="false" />
+          <Property Name="InvoiceID" Type="int" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="RegistrationFeeAmount" Type="money" />
+          <Property Name="EnrollmentStartDate" Type="datetime" />
+          <Property Name="TuitionAmount" Type="money" />
+          <Property Name="TuitionProrate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="MiddlewayTuitionDiscount" Type="money" />
+          <Property Name="EcOrTeacherTuitionDiscount" Type="money" />
+          <Property Name="FinalTuitionAmount" Type="money" />
+          <Property Name="TextbookAmount" Type="money" />
+          <Property Name="TextbookNeeded" Type="char" MaxLength="1" />
+          <Property Name="RefundOnDropRegFeeAmount" Type="money" />
+          <Property Name="RefundOnDropTuitionAmount" Type="money" />
+          <Property Name="RefundOnDropTextbookAmount" Type="money" />
+          <Property Name="HccAmount" Type="money" />
+          <Property Name="CcbcAmount" Type="money" />
+          <Property Name="RegistrationStatus" Type="smallint" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="nvarchar" MaxLength="50" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Hccsrole' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Hccsrole">
+          <Key>
+            <PropertyRef Name="h_Hccsrole_id" />
+            <PropertyRef Name="HCCSRoleID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="HccsRole" />
+            <PropertyRef Name="Schoolyear" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="HccsTitleEnglish" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Hccsrole_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HCCSRoleID" Type="int" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="HccsRole" Type="smallint" Nullable="false" />
+          <Property Name="Schoolyear" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="HccsTitleEnglish" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="HccsTitleChinese" Type="nvarchar" MaxLength="64" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Invoice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Invoice">
+          <Key>
+            <PropertyRef Name="h_Invoice_id" />
+            <PropertyRef Name="InvoiceID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="InvoiceDt" />
+            <PropertyRef Name="Schoolyear" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="InvoiceDt" Type="datetime" Nullable="false" />
+          <Property Name="Schoolyear" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="FamilyDiscountCount" Type="smallint" />
+          <Property Name="FamilyDiscount" Type="money" />
+          <Property Name="BilingualDiscountCount" Type="smallint" />
+          <Property Name="BilingualDiscount" Type="money" />
+          <Property Name="TotalInvoiceAmount" Type="money" />
+          <Property Name="PaymentStatus" Type="smallint" />
+          <Property Name="PaymentID" Type="int" />
+          <Property Name="PaymentDt" Type="datetime" />
+          <Property Name="PaymentAmount" Type="money" />
+          <Property Name="RefundOnDropFamilyDsctAmount" Type="money" />
+          <Property Name="RefundOnDropBilingualDsctAmount" Type="money" />
+          <Property Name="TotalBalanceAmount" Type="money" />
+          <Property Name="InvoiceNotes" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="nvarchar" MaxLength="50" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Payment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Payment">
+          <Key>
+            <PropertyRef Name="h_Payment_id" />
+            <PropertyRef Name="PaymentUID" />
+            <PropertyRef Name="PaymentID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="PaymentMethod" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="Processed" />
+            <PropertyRef Name="Confirmed" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentUID" Type="int" Nullable="false" />
+          <Property Name="PaymentID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="ObligationID" Type="int" />
+          <Property Name="PaymentMethod" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Checknum" Type="nvarchar" MaxLength="128" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="256" />
+          <Property Name="ReceiveDate" Type="datetime" />
+          <Property Name="ProcessedDate" Type="datetime" />
+          <Property Name="Processed" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Confirmed" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ConfirmedDate" Type="datetime" />
+          <Property Name="ConfirmedByID" Type="int" />
+          <Property Name="CampusID" Type="int" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Person' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Person">
+          <Key>
+            <PropertyRef Name="h_Person_id" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="PersonType" />
+            <PropertyRef Name="CreationDt" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Person_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="16" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="16" />
+          <Property Name="ChineseName" Type="nvarchar" MaxLength="32" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="PersonType" Type="int" Nullable="false" />
+          <Property Name="CreationDt" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsOnEmailList" Type="char" MaxLength="1" />
+          <Property Name="HomePhone" Type="nvarchar" MaxLength="16" />
+          <Property Name="WorkPhone" Type="nvarchar" MaxLength="16" />
+          <Property Name="CellPhone" Type="nvarchar" MaxLength="16" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="16" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="256" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="256" />
+          <Property Name="City" Type="nvarchar" MaxLength="32" />
+          <Property Name="State" Type="nvarchar" MaxLength="16" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="16" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="IsNewStudent" Type="char" MaxLength="1" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Refund' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Refund">
+          <Key>
+            <PropertyRef Name="h_Refund_id" />
+            <PropertyRef Name="RefundID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="ProcessedDate" />
+            <PropertyRef Name="Processed" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Refund_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefundID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="Checknum" Type="nvarchar" MaxLength="128" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="256" />
+          <Property Name="ProcessedDate" Type="datetime" Nullable="false" />
+          <Property Name="Processed" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Schedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Schedule">
+          <Key>
+            <PropertyRef Name="h_Schedule_id" />
+            <PropertyRef Name="ScheduleID" />
+            <PropertyRef Name="HccsRoleID" />
+            <PropertyRef Name="SchoolYear" />
+            <PropertyRef Name="WaitinglistLimit" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Schedule_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduleID" Type="int" Nullable="false" />
+          <Property Name="CourseID" Type="nvarchar" MaxLength="16" />
+          <Property Name="ClassroomID" Type="nvarchar" MaxLength="16" />
+          <Property Name="HccsRoleID" Type="int" Nullable="false" />
+          <Property Name="TextbookID" Type="int" />
+          <Property Name="SchoolYear" Type="int" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="16" />
+          <Property Name="ClassNameEnglish" Type="nvarchar" MaxLength="32" />
+          <Property Name="ClassNameChinese" Type="nvarchar" MaxLength="256" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="ClassTime" Type="nvarchar" MaxLength="128" />
+          <Property Name="Classstarttime" Type="money" />
+          <Property Name="Classendtime" Type="money" />
+          <Property Name="WaitinglistLimit" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+          <Property Name="UpdatedByID" Type="int" />
+          <Property Name="h_created_date" Type="datetime" Nullable="false" />
+          <Property Name="h_action_flag" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="h_user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HccsWebDB.history.h_Textbook' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'HccsWebDB.history.table_section' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="table_section">
+          <Property Name="table_name" Type="varchar" MaxLength="50" />
+          <Property Name="ues_schema_name" Type="varchar" MaxLength="10" />
+          <Property Name="is_auditing_tbl" Type="smallint" />
+        </EntityType>-->
+        <Association Name="FK_Account_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classroom_Campus">
+          <End Role="Campus" Type="Self.Campus" Multiplicity="1" />
+          <End Role="Classroom" Type="Self.Classroom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campus">
+              <PropertyRef Name="CampusID" />
+            </Principal>
+            <Dependent Role="Classroom">
+              <PropertyRef Name="CampusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollment_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollment_Schedule">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="ScheduleID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hccsrole_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Hccsrole" Type="Self.Hccsrole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Hccsrole">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoice_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Refund_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Refund" Type="Self.Refund" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Refund">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Classroom">
+          <End Role="Classroom" Type="Self.Classroom" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classroom">
+              <PropertyRef Name="ClassroomID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ClassroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Teacher">
+          <End Role="Hccsrole" Type="Self.Hccsrole" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hccsrole">
+              <PropertyRef Name="HCCSRoleID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="HccsRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Textbook">
+          <End Role="Textbook" Type="Self.Textbook" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Textbook">
+              <PropertyRef Name="TextbookID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TextbookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HccsWebDBModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Campus" EntityType="Self.Campus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classroom" EntityType="Self.Classroom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hccsrole" EntityType="Self.Hccsrole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Refund" EntityType="Self.Refund" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Textbook" EntityType="Self.Textbook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deadline" EntityType="Self.Deadline" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Deadline].[DeadlineType] AS [DeadlineType], 
+    [Deadline].[DeadlineDt] AS [DeadlineDt], 
+    [Deadline].[Schoolyear] AS [Schoolyear], 
+    [Deadline].[Semester] AS [Semester], 
+    [Deadline].[Created] AS [Created], 
+    [Deadline].[CreatedByID] AS [CreatedByID], 
+    [Deadline].[Updated] AS [Updated], 
+    [Deadline].[UpdatedByID] AS [UpdatedByID]
+    FROM [dbo].[Deadline] AS [Deadline]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Account" EntityType="Self.h_Account" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Account].[h_Account_id] AS [h_Account_id], 
+    [h_Account].[AccountID] AS [AccountID], 
+    [h_Account].[PersonID] AS [PersonID], 
+    [h_Account].[AccountConfirmedDt] AS [AccountConfirmedDt], 
+    [h_Account].[AccountStatus] AS [AccountStatus], 
+    [h_Account].[Username] AS [Username], 
+    [h_Account].[Password] AS [Password], 
+    [h_Account].[ConfirmationCode] AS [ConfirmationCode], 
+    [h_Account].[Created] AS [Created], 
+    [h_Account].[CreatedByID] AS [CreatedByID], 
+    [h_Account].[Updated] AS [Updated], 
+    [h_Account].[UpdatedByID] AS [UpdatedByID], 
+    [h_Account].[h_created_date] AS [h_created_date], 
+    [h_Account].[h_action_flag] AS [h_action_flag], 
+    [h_Account].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Account] AS [h_Account]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Enrollment" EntityType="Self.h_Enrollment" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Enrollment].[h_Enrollment_id] AS [h_Enrollment_id], 
+    [h_Enrollment].[EnrollmentID] AS [EnrollmentID], 
+    [h_Enrollment].[ScheduleID] AS [ScheduleID], 
+    [h_Enrollment].[InvoiceID] AS [InvoiceID], 
+    [h_Enrollment].[PersonID] AS [PersonID], 
+    [h_Enrollment].[RegistrationFeeAmount] AS [RegistrationFeeAmount], 
+    [h_Enrollment].[EnrollmentStartDate] AS [EnrollmentStartDate], 
+    [h_Enrollment].[TuitionAmount] AS [TuitionAmount], 
+    [h_Enrollment].[TuitionProrate] AS [TuitionProrate], 
+    [h_Enrollment].[MiddlewayTuitionDiscount] AS [MiddlewayTuitionDiscount], 
+    [h_Enrollment].[EcOrTeacherTuitionDiscount] AS [EcOrTeacherTuitionDiscount], 
+    [h_Enrollment].[FinalTuitionAmount] AS [FinalTuitionAmount], 
+    [h_Enrollment].[TextbookAmount] AS [TextbookAmount], 
+    [h_Enrollment].[TextbookNeeded] AS [TextbookNeeded], 
+    [h_Enrollment].[RefundOnDropRegFeeAmount] AS [RefundOnDropRegFeeAmount], 
+    [h_Enrollment].[RefundOnDropTuitionAmount] AS [RefundOnDropTuitionAmount], 
+    [h_Enrollment].[RefundOnDropTextbookAmount] AS [RefundOnDropTextbookAmount], 
+    [h_Enrollment].[HccAmount] AS [HccAmount], 
+    [h_Enrollment].[CcbcAmount] AS [CcbcAmount], 
+    [h_Enrollment].[RegistrationStatus] AS [RegistrationStatus], 
+    [h_Enrollment].[Created] AS [Created], 
+    [h_Enrollment].[CreatedByID] AS [CreatedByID], 
+    [h_Enrollment].[Updated] AS [Updated], 
+    [h_Enrollment].[UpdatedByID] AS [UpdatedByID], 
+    [h_Enrollment].[h_created_date] AS [h_created_date], 
+    [h_Enrollment].[h_action_flag] AS [h_action_flag], 
+    [h_Enrollment].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Enrollment] AS [h_Enrollment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Hccsrole" EntityType="Self.h_Hccsrole" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Hccsrole].[h_Hccsrole_id] AS [h_Hccsrole_id], 
+    [h_Hccsrole].[HCCSRoleID] AS [HCCSRoleID], 
+    [h_Hccsrole].[PersonID] AS [PersonID], 
+    [h_Hccsrole].[HccsRole] AS [HccsRole], 
+    [h_Hccsrole].[Schoolyear] AS [Schoolyear], 
+    [h_Hccsrole].[Semester] AS [Semester], 
+    [h_Hccsrole].[HccsTitleEnglish] AS [HccsTitleEnglish], 
+    [h_Hccsrole].[HccsTitleChinese] AS [HccsTitleChinese], 
+    [h_Hccsrole].[Created] AS [Created], 
+    [h_Hccsrole].[CreatedByID] AS [CreatedByID], 
+    [h_Hccsrole].[Updated] AS [Updated], 
+    [h_Hccsrole].[UpdatedByID] AS [UpdatedByID], 
+    [h_Hccsrole].[h_created_date] AS [h_created_date], 
+    [h_Hccsrole].[h_action_flag] AS [h_action_flag], 
+    [h_Hccsrole].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Hccsrole] AS [h_Hccsrole]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Invoice" EntityType="Self.h_Invoice" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Invoice].[h_Invoice_id] AS [h_Invoice_id], 
+    [h_Invoice].[InvoiceID] AS [InvoiceID], 
+    [h_Invoice].[AccountID] AS [AccountID], 
+    [h_Invoice].[InvoiceDt] AS [InvoiceDt], 
+    [h_Invoice].[Schoolyear] AS [Schoolyear], 
+    [h_Invoice].[Semester] AS [Semester], 
+    [h_Invoice].[FamilyDiscountCount] AS [FamilyDiscountCount], 
+    [h_Invoice].[FamilyDiscount] AS [FamilyDiscount], 
+    [h_Invoice].[BilingualDiscountCount] AS [BilingualDiscountCount], 
+    [h_Invoice].[BilingualDiscount] AS [BilingualDiscount], 
+    [h_Invoice].[TotalInvoiceAmount] AS [TotalInvoiceAmount], 
+    [h_Invoice].[PaymentStatus] AS [PaymentStatus], 
+    [h_Invoice].[PaymentID] AS [PaymentID], 
+    [h_Invoice].[PaymentDt] AS [PaymentDt], 
+    [h_Invoice].[PaymentAmount] AS [PaymentAmount], 
+    [h_Invoice].[RefundOnDropFamilyDsctAmount] AS [RefundOnDropFamilyDsctAmount], 
+    [h_Invoice].[RefundOnDropBilingualDsctAmount] AS [RefundOnDropBilingualDsctAmount], 
+    [h_Invoice].[TotalBalanceAmount] AS [TotalBalanceAmount], 
+    [h_Invoice].[InvoiceNotes] AS [InvoiceNotes], 
+    [h_Invoice].[Created] AS [Created], 
+    [h_Invoice].[CreatedByID] AS [CreatedByID], 
+    [h_Invoice].[Updated] AS [Updated], 
+    [h_Invoice].[UpdatedByID] AS [UpdatedByID], 
+    [h_Invoice].[h_created_date] AS [h_created_date], 
+    [h_Invoice].[h_action_flag] AS [h_action_flag], 
+    [h_Invoice].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Invoice] AS [h_Invoice]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Payment" EntityType="Self.h_Payment" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Payment].[h_Payment_id] AS [h_Payment_id], 
+    [h_Payment].[PaymentUID] AS [PaymentUID], 
+    [h_Payment].[PaymentID] AS [PaymentID], 
+    [h_Payment].[AccountID] AS [AccountID], 
+    [h_Payment].[ObligationID] AS [ObligationID], 
+    [h_Payment].[PaymentMethod] AS [PaymentMethod], 
+    [h_Payment].[Checknum] AS [Checknum], 
+    [h_Payment].[Amount] AS [Amount], 
+    [h_Payment].[Note] AS [Note], 
+    [h_Payment].[ReceiveDate] AS [ReceiveDate], 
+    [h_Payment].[ProcessedDate] AS [ProcessedDate], 
+    [h_Payment].[Processed] AS [Processed], 
+    [h_Payment].[Confirmed] AS [Confirmed], 
+    [h_Payment].[ConfirmedDate] AS [ConfirmedDate], 
+    [h_Payment].[ConfirmedByID] AS [ConfirmedByID], 
+    [h_Payment].[CampusID] AS [CampusID], 
+    [h_Payment].[Created] AS [Created], 
+    [h_Payment].[CreatedByID] AS [CreatedByID], 
+    [h_Payment].[Updated] AS [Updated], 
+    [h_Payment].[UpdatedByID] AS [UpdatedByID], 
+    [h_Payment].[h_created_date] AS [h_created_date], 
+    [h_Payment].[h_action_flag] AS [h_action_flag], 
+    [h_Payment].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Payment] AS [h_Payment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Person" EntityType="Self.h_Person" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Person].[h_Person_id] AS [h_Person_id], 
+    [h_Person].[PersonID] AS [PersonID], 
+    [h_Person].[FirstName] AS [FirstName], 
+    [h_Person].[MiddleName] AS [MiddleName], 
+    [h_Person].[LastName] AS [LastName], 
+    [h_Person].[ChineseName] AS [ChineseName], 
+    [h_Person].[Gender] AS [Gender], 
+    [h_Person].[BirthDate] AS [BirthDate], 
+    [h_Person].[PersonType] AS [PersonType], 
+    [h_Person].[CreationDt] AS [CreationDt], 
+    [h_Person].[Email] AS [Email], 
+    [h_Person].[IsOnEmailList] AS [IsOnEmailList], 
+    [h_Person].[HomePhone] AS [HomePhone], 
+    [h_Person].[WorkPhone] AS [WorkPhone], 
+    [h_Person].[CellPhone] AS [CellPhone], 
+    [h_Person].[Fax] AS [Fax], 
+    [h_Person].[AddressLine1] AS [AddressLine1], 
+    [h_Person].[AddressLine2] AS [AddressLine2], 
+    [h_Person].[City] AS [City], 
+    [h_Person].[State] AS [State], 
+    [h_Person].[ZipCode] AS [ZipCode], 
+    [h_Person].[ParentID] AS [ParentID], 
+    [h_Person].[IsNewStudent] AS [IsNewStudent], 
+    [h_Person].[Created] AS [Created], 
+    [h_Person].[CreatedByID] AS [CreatedByID], 
+    [h_Person].[Updated] AS [Updated], 
+    [h_Person].[UpdatedByID] AS [UpdatedByID], 
+    [h_Person].[h_created_date] AS [h_created_date], 
+    [h_Person].[h_action_flag] AS [h_action_flag], 
+    [h_Person].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Person] AS [h_Person]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Refund" EntityType="Self.h_Refund" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Refund].[h_Refund_id] AS [h_Refund_id], 
+    [h_Refund].[RefundID] AS [RefundID], 
+    [h_Refund].[AccountID] AS [AccountID], 
+    [h_Refund].[Checknum] AS [Checknum], 
+    [h_Refund].[Amount] AS [Amount], 
+    [h_Refund].[Note] AS [Note], 
+    [h_Refund].[ProcessedDate] AS [ProcessedDate], 
+    [h_Refund].[Processed] AS [Processed], 
+    [h_Refund].[Created] AS [Created], 
+    [h_Refund].[CreatedByID] AS [CreatedByID], 
+    [h_Refund].[Updated] AS [Updated], 
+    [h_Refund].[UpdatedByID] AS [UpdatedByID], 
+    [h_Refund].[h_created_date] AS [h_created_date], 
+    [h_Refund].[h_action_flag] AS [h_action_flag], 
+    [h_Refund].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Refund] AS [h_Refund]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="h_Schedule" EntityType="Self.h_Schedule" store:Type="Tables" store:Schema="history">
+            <DefiningQuery>SELECT 
+    [h_Schedule].[h_Schedule_id] AS [h_Schedule_id], 
+    [h_Schedule].[ScheduleID] AS [ScheduleID], 
+    [h_Schedule].[CourseID] AS [CourseID], 
+    [h_Schedule].[ClassroomID] AS [ClassroomID], 
+    [h_Schedule].[HccsRoleID] AS [HccsRoleID], 
+    [h_Schedule].[TextbookID] AS [TextbookID], 
+    [h_Schedule].[SchoolYear] AS [SchoolYear], 
+    [h_Schedule].[Semester] AS [Semester], 
+    [h_Schedule].[ClassNameEnglish] AS [ClassNameEnglish], 
+    [h_Schedule].[ClassNameChinese] AS [ClassNameChinese], 
+    [h_Schedule].[Capacity] AS [Capacity], 
+    [h_Schedule].[ClassTime] AS [ClassTime], 
+    [h_Schedule].[Classstarttime] AS [Classstarttime], 
+    [h_Schedule].[Classendtime] AS [Classendtime], 
+    [h_Schedule].[WaitinglistLimit] AS [WaitinglistLimit], 
+    [h_Schedule].[Created] AS [Created], 
+    [h_Schedule].[CreatedByID] AS [CreatedByID], 
+    [h_Schedule].[Updated] AS [Updated], 
+    [h_Schedule].[UpdatedByID] AS [UpdatedByID], 
+    [h_Schedule].[h_created_date] AS [h_created_date], 
+    [h_Schedule].[h_action_flag] AS [h_action_flag], 
+    [h_Schedule].[h_user_id] AS [h_user_id]
+    FROM [history].[h_Schedule] AS [h_Schedule]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Account_Person" Association="Self.FK_Account_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classroom_Campus" Association="Self.FK_Classroom_Campus">
+            <End Role="Campus" EntitySet="Campus" />
+            <End Role="Classroom" EntitySet="Classroom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollment_Person" Association="Self.FK_Enrollment_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollment_Schedule" Association="Self.FK_Enrollment_Schedule">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hccsrole_Person" Association="Self.FK_Hccsrole_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Hccsrole" EntitySet="Hccsrole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoice_Account" Association="Self.FK_Invoice_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Account" Association="Self.FK_Payment_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Refund_Account" Association="Self.FK_Refund_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Refund" EntitySet="Refund" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Classroom" Association="Self.FK_Schedule_Classroom">
+            <End Role="Classroom" EntitySet="Classroom" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Course" Association="Self.FK_Schedule_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Teacher" Association="Self.FK_Schedule_Teacher">
+            <End Role="Hccsrole" EntitySet="Hccsrole" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Textbook" Association="Self.FK_Schedule_Textbook">
+            <End Role="Textbook" EntitySet="Textbook" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HccsWebDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="AccountConfirmedDt" Type="DateTime" Precision="3" />
+          <Property Name="AccountStatus" Type="Int16" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConfirmationCode" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Account_Person" FromRole="Account" ToRole="Person" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK_Invoice_Account" FromRole="Account" ToRole="Invoice" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Account" FromRole="Account" ToRole="Payment" />
+          <NavigationProperty Name="Refunds" Relationship="Self.FK_Refund_Account" FromRole="Account" ToRole="Refund" />
+        </EntityType>
+        <EntityType Name="Campus">
+          <Key>
+            <PropertyRef Name="CampusID" />
+          </Key>
+          <Property Name="CampusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CampusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CampusAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Classrooms" Relationship="Self.FK_Classroom_Campus" FromRole="Campus" ToRole="Classroom" />
+        </EntityType>
+        <EntityType Name="Classroom">
+          <Key>
+            <PropertyRef Name="ClassroomID" />
+          </Key>
+          <Property Name="ClassroomID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomNum" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Building" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="CampusID" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Campus" Relationship="Self.FK_Classroom_Campus" FromRole="Classroom" ToRole="Campus" />
+          <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedule_Classroom" FromRole="Classroom" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourseNameEnglish" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CourseNameChinese" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CourseType" Type="Int16" Nullable="false" />
+          <Property Name="RegistrationFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Tuition" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Schoolyear" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PreferredSeqNum" Type="Int32" />
+          <Property Name="NumOfUnits" Type="Int16" />
+          <Property Name="Minimumage" Type="Int32" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedule_Course" FromRole="Course" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceID" Type="Int32" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="RegistrationFeeAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EnrollmentStartDate" Type="DateTime" Precision="3" />
+          <Property Name="TuitionAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TuitionProrate" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="MiddlewayTuitionDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EcOrTeacherTuitionDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FinalTuitionAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TextbookAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TextbookNeeded" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RefundOnDropRegFeeAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropTuitionAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropTextbookAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="HccAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CcbcAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RegistrationStatus" Type="Int16" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Enrollment_Person" FromRole="Enrollment" ToRole="Person" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Enrollment_Schedule" FromRole="Enrollment" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Hccsrole">
+          <Key>
+            <PropertyRef Name="HCCSRoleID" />
+          </Key>
+          <Property Name="HCCSRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="HccsRole1" Type="Int16" Nullable="false" />
+          <Property Name="Schoolyear" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HccsTitleEnglish" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HccsTitleChinese" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Hccsrole_Person" FromRole="Hccsrole" ToRole="Person" />
+          <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedule_Teacher" FromRole="Hccsrole" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+          </Key>
+          <Property Name="InvoiceID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Schoolyear" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FamilyDiscountCount" Type="Int16" />
+          <Property Name="FamilyDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BilingualDiscountCount" Type="Int16" />
+          <Property Name="BilingualDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalInvoiceAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PaymentStatus" Type="Int16" />
+          <Property Name="PaymentID" Type="Int32" />
+          <Property Name="PaymentDt" Type="DateTime" Precision="3" />
+          <Property Name="PaymentAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropFamilyDsctAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropBilingualDsctAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalBalanceAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="InvoiceNotes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Invoice_Account" FromRole="Invoice" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentUID" />
+          </Key>
+          <Property Name="PaymentUID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="ObligationID" Type="Int32" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Checknum" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiveDate" Type="DateTime" Precision="3" />
+          <Property Name="ProcessedDate" Type="DateTime" Precision="3" />
+          <Property Name="Processed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Confirmed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ConfirmedDate" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmedByID" Type="Int32" />
+          <Property Name="CampusID" Type="Int32" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Payment_Account" FromRole="Payment" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ChineseName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="PersonType" Type="Int32" Nullable="false" />
+          <Property Name="CreationDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsOnEmailList" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="WorkPhone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="CellPhone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="IsNewStudent" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Person" FromRole="Person" ToRole="Account" />
+          <NavigationProperty Name="Enrollments" Relationship="Self.FK_Enrollment_Person" FromRole="Person" ToRole="Enrollment" />
+          <NavigationProperty Name="Hccsroles" Relationship="Self.FK_Hccsrole_Person" FromRole="Person" ToRole="Hccsrole" />
+        </EntityType>
+        <EntityType Name="Refund">
+          <Key>
+            <PropertyRef Name="RefundID" />
+          </Key>
+          <Property Name="RefundID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="Checknum" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ProcessedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Processed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Refund_Account" FromRole="Refund" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ClassroomID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="HccsRoleID" Type="Int32" Nullable="false" />
+          <Property Name="TextbookID" Type="Int32" />
+          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ClassNameEnglish" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ClassNameChinese" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="ClassTime" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Classstarttime" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Classendtime" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="WaitinglistLimit" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Classroom" Relationship="Self.FK_Schedule_Classroom" FromRole="Schedule" ToRole="Classroom" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Schedule_Course" FromRole="Schedule" ToRole="Course" />
+          <NavigationProperty Name="Enrollments" Relationship="Self.FK_Enrollment_Schedule" FromRole="Schedule" ToRole="Enrollment" />
+          <NavigationProperty Name="Hccsrole" Relationship="Self.FK_Schedule_Teacher" FromRole="Schedule" ToRole="Hccsrole" />
+          <NavigationProperty Name="Textbook" Relationship="Self.FK_Schedule_Textbook" FromRole="Schedule" ToRole="Textbook" />
+        </EntityType>
+        <EntityType Name="Textbook">
+          <Key>
+            <PropertyRef Name="TextbookID" />
+          </Key>
+          <Property Name="TextbookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookTitleEnglish" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="BookTitleChinese" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="BookVersionEnglish" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="BookVersionChinese" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedule_Textbook" FromRole="Textbook" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Deadline">
+          <Key>
+            <PropertyRef Name="DeadlineType" />
+            <PropertyRef Name="DeadlineDt" />
+            <PropertyRef Name="Schoolyear" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+          </Key>
+          <Property Name="DeadlineType" Type="Int16" Nullable="false" />
+          <Property Name="DeadlineDt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Schoolyear" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="h_Account">
+          <Key>
+            <PropertyRef Name="h_Account_id" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="AccountStatus" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="ConfirmationCode" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Account_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="AccountConfirmedDt" Type="DateTime" Precision="3" />
+          <Property Name="AccountStatus" Type="Int16" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConfirmationCode" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_Enrollment">
+          <Key>
+            <PropertyRef Name="h_Enrollment_id" />
+            <PropertyRef Name="EnrollmentID" />
+            <PropertyRef Name="ScheduleID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="RegistrationStatus" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Enrollment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnrollmentID" Type="Int32" Nullable="false" />
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceID" Type="Int32" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="RegistrationFeeAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EnrollmentStartDate" Type="DateTime" Precision="3" />
+          <Property Name="TuitionAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TuitionProrate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MiddlewayTuitionDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EcOrTeacherTuitionDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FinalTuitionAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TextbookAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TextbookNeeded" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RefundOnDropRegFeeAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropTuitionAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropTextbookAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="HccAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CcbcAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RegistrationStatus" Type="Int16" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_Hccsrole">
+          <Key>
+            <PropertyRef Name="h_Hccsrole_id" />
+            <PropertyRef Name="HCCSRoleID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="HccsRole" />
+            <PropertyRef Name="Schoolyear" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="HccsTitleEnglish" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Hccsrole_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HCCSRoleID" Type="Int32" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="HccsRole" Type="Int16" Nullable="false" />
+          <Property Name="Schoolyear" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HccsTitleEnglish" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HccsTitleChinese" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_Invoice">
+          <Key>
+            <PropertyRef Name="h_Invoice_id" />
+            <PropertyRef Name="InvoiceID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="InvoiceDt" />
+            <PropertyRef Name="Schoolyear" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Schoolyear" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FamilyDiscountCount" Type="Int16" />
+          <Property Name="FamilyDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BilingualDiscountCount" Type="Int16" />
+          <Property Name="BilingualDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalInvoiceAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PaymentStatus" Type="Int16" />
+          <Property Name="PaymentID" Type="Int32" />
+          <Property Name="PaymentDt" Type="DateTime" Precision="3" />
+          <Property Name="PaymentAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropFamilyDsctAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RefundOnDropBilingualDsctAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalBalanceAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="InvoiceNotes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_Payment">
+          <Key>
+            <PropertyRef Name="h_Payment_id" />
+            <PropertyRef Name="PaymentUID" />
+            <PropertyRef Name="PaymentID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="PaymentMethod" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="Processed" />
+            <PropertyRef Name="Confirmed" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Payment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentUID" Type="Int32" Nullable="false" />
+          <Property Name="PaymentID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="ObligationID" Type="Int32" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Checknum" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiveDate" Type="DateTime" Precision="3" />
+          <Property Name="ProcessedDate" Type="DateTime" Precision="3" />
+          <Property Name="Processed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Confirmed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ConfirmedDate" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmedByID" Type="Int32" />
+          <Property Name="CampusID" Type="Int32" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_Person">
+          <Key>
+            <PropertyRef Name="h_Person_id" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="PersonType" />
+            <PropertyRef Name="CreationDt" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Person_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ChineseName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="PersonType" Type="Int32" Nullable="false" />
+          <Property Name="CreationDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsOnEmailList" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="WorkPhone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="CellPhone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="IsNewStudent" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_Refund">
+          <Key>
+            <PropertyRef Name="h_Refund_id" />
+            <PropertyRef Name="RefundID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="ProcessedDate" />
+            <PropertyRef Name="Processed" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Refund_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RefundID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="Checknum" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ProcessedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Processed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_Schedule">
+          <Key>
+            <PropertyRef Name="h_Schedule_id" />
+            <PropertyRef Name="ScheduleID" />
+            <PropertyRef Name="HccsRoleID" />
+            <PropertyRef Name="SchoolYear" />
+            <PropertyRef Name="WaitinglistLimit" />
+            <PropertyRef Name="Created" />
+            <PropertyRef Name="CreatedByID" />
+            <PropertyRef Name="h_created_date" />
+            <PropertyRef Name="h_action_flag" />
+            <PropertyRef Name="h_user_id" />
+          </Key>
+          <Property Name="h_Schedule_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="CourseID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ClassroomID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="HccsRoleID" Type="Int32" Nullable="false" />
+          <Property Name="TextbookID" Type="Int32" />
+          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
+          <Property Name="Semester" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ClassNameEnglish" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ClassNameChinese" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="ClassTime" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Classstarttime" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Classendtime" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="WaitinglistLimit" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByID" Type="Int32" />
+          <Property Name="h_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="h_action_flag" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Account_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoice_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Refund_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Refund" Type="Self.Refund" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Refund">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classroom_Campus">
+          <End Role="Campus" Type="HccsWebDBModel.Campus" Multiplicity="1" />
+          <End Role="Classroom" Type="Self.Classroom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campus">
+              <PropertyRef Name="CampusID" />
+            </Principal>
+            <Dependent Role="Classroom">
+              <PropertyRef Name="CampusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Classroom">
+          <End Role="Classroom" Type="Self.Classroom" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classroom">
+              <PropertyRef Name="ClassroomID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ClassroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollment_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollment_Schedule">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="ScheduleID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hccsrole_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Hccsrole" Type="Self.Hccsrole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Hccsrole">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Teacher">
+          <End Role="Hccsrole" Type="Self.Hccsrole" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hccsrole">
+              <PropertyRef Name="HCCSRoleID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="HccsRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Textbook">
+          <End Role="Textbook" Type="Self.Textbook" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Textbook">
+              <PropertyRef Name="TextbookID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TextbookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HccsWebDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Campus1" EntityType="HccsWebDBModel.Campus" />
+          <EntitySet Name="Classrooms" EntityType="Self.Classroom" />
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Enrollments" EntityType="Self.Enrollment" />
+          <EntitySet Name="Hccsroles" EntityType="Self.Hccsrole" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="Refunds" EntityType="Self.Refund" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+          <EntitySet Name="Textbooks" EntityType="Self.Textbook" />
+          <EntitySet Name="Deadlines" EntityType="Self.Deadline" />
+          <EntitySet Name="h_Account" EntityType="Self.h_Account" />
+          <EntitySet Name="h_Enrollment" EntityType="Self.h_Enrollment" />
+          <EntitySet Name="h_Hccsrole" EntityType="Self.h_Hccsrole" />
+          <EntitySet Name="h_Invoice" EntityType="Self.h_Invoice" />
+          <EntitySet Name="h_Payment" EntityType="Self.h_Payment" />
+          <EntitySet Name="h_Person" EntityType="Self.h_Person" />
+          <EntitySet Name="h_Refund" EntityType="Self.h_Refund" />
+          <EntitySet Name="h_Schedule" EntityType="Self.h_Schedule" />
+          <AssociationSet Name="FK_Account_Person" Association="Self.FK_Account_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoice_Account" Association="Self.FK_Invoice_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Account" Association="Self.FK_Payment_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Refund_Account" Association="Self.FK_Refund_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Refund" EntitySet="Refunds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classroom_Campus" Association="Self.FK_Classroom_Campus">
+            <End Role="Campus" EntitySet="Campus1" />
+            <End Role="Classroom" EntitySet="Classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Classroom" Association="Self.FK_Schedule_Classroom">
+            <End Role="Classroom" EntitySet="Classrooms" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Course" Association="Self.FK_Schedule_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollment_Person" Association="Self.FK_Enrollment_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollment_Schedule" Association="Self.FK_Enrollment_Schedule">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hccsrole_Person" Association="Self.FK_Hccsrole_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Hccsrole" EntitySet="Hccsroles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Teacher" Association="Self.FK_Schedule_Teacher">
+            <End Role="Hccsrole" EntitySet="Hccsroles" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Textbook" Association="Self.FK_Schedule_Textbook">
+            <End Role="Textbook" EntitySet="Textbooks" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HccsWebDBModelStoreContainer" CdmEntityContainer="HccsWebDBEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="AccountConfirmedDt" ColumnName="AccountConfirmedDt" />
+                <ScalarProperty Name="AccountStatus" ColumnName="AccountStatus" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ConfirmationCode" ColumnName="ConfirmationCode" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Campus1">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Campus">
+              <MappingFragment StoreEntitySet="Campus">
+                <ScalarProperty Name="CampusID" ColumnName="CampusID" />
+                <ScalarProperty Name="CampusName" ColumnName="CampusName" />
+                <ScalarProperty Name="CampusAddress" ColumnName="CampusAddress" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classrooms">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Classroom">
+              <MappingFragment StoreEntitySet="Classroom">
+                <ScalarProperty Name="ClassroomID" ColumnName="ClassroomID" />
+                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="CampusID" ColumnName="CampusID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="CourseNameEnglish" ColumnName="CourseNameEnglish" />
+                <ScalarProperty Name="CourseNameChinese" ColumnName="CourseNameChinese" />
+                <ScalarProperty Name="CourseType" ColumnName="CourseType" />
+                <ScalarProperty Name="RegistrationFee" ColumnName="RegistrationFee" />
+                <ScalarProperty Name="Tuition" ColumnName="Tuition" />
+                <ScalarProperty Name="Schoolyear" ColumnName="Schoolyear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PreferredSeqNum" ColumnName="PreferredSeqNum" />
+                <ScalarProperty Name="NumOfUnits" ColumnName="NumOfUnits" />
+                <ScalarProperty Name="Minimumage" ColumnName="Minimumage" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollments">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Enrollment">
+              <MappingFragment StoreEntitySet="Enrollment">
+                <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="RegistrationFeeAmount" ColumnName="RegistrationFeeAmount" />
+                <ScalarProperty Name="EnrollmentStartDate" ColumnName="EnrollmentStartDate" />
+                <ScalarProperty Name="TuitionAmount" ColumnName="TuitionAmount" />
+                <ScalarProperty Name="TuitionProrate" ColumnName="TuitionProrate" />
+                <ScalarProperty Name="MiddlewayTuitionDiscount" ColumnName="MiddlewayTuitionDiscount" />
+                <ScalarProperty Name="EcOrTeacherTuitionDiscount" ColumnName="EcOrTeacherTuitionDiscount" />
+                <ScalarProperty Name="FinalTuitionAmount" ColumnName="FinalTuitionAmount" />
+                <ScalarProperty Name="TextbookAmount" ColumnName="TextbookAmount" />
+                <ScalarProperty Name="TextbookNeeded" ColumnName="TextbookNeeded" />
+                <ScalarProperty Name="RefundOnDropRegFeeAmount" ColumnName="RefundOnDropRegFeeAmount" />
+                <ScalarProperty Name="RefundOnDropTuitionAmount" ColumnName="RefundOnDropTuitionAmount" />
+                <ScalarProperty Name="RefundOnDropTextbookAmount" ColumnName="RefundOnDropTextbookAmount" />
+                <ScalarProperty Name="HccAmount" ColumnName="HccAmount" />
+                <ScalarProperty Name="CcbcAmount" ColumnName="CcbcAmount" />
+                <ScalarProperty Name="RegistrationStatus" ColumnName="RegistrationStatus" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hccsroles">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Hccsrole">
+              <MappingFragment StoreEntitySet="Hccsrole">
+                <ScalarProperty Name="HCCSRoleID" ColumnName="HCCSRoleID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="HccsRole1" ColumnName="HccsRole" />
+                <ScalarProperty Name="Schoolyear" ColumnName="Schoolyear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="HccsTitleEnglish" ColumnName="HccsTitleEnglish" />
+                <ScalarProperty Name="HccsTitleChinese" ColumnName="HccsTitleChinese" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="InvoiceDt" ColumnName="InvoiceDt" />
+                <ScalarProperty Name="Schoolyear" ColumnName="Schoolyear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="FamilyDiscountCount" ColumnName="FamilyDiscountCount" />
+                <ScalarProperty Name="FamilyDiscount" ColumnName="FamilyDiscount" />
+                <ScalarProperty Name="BilingualDiscountCount" ColumnName="BilingualDiscountCount" />
+                <ScalarProperty Name="BilingualDiscount" ColumnName="BilingualDiscount" />
+                <ScalarProperty Name="TotalInvoiceAmount" ColumnName="TotalInvoiceAmount" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="PaymentDt" ColumnName="PaymentDt" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="RefundOnDropFamilyDsctAmount" ColumnName="RefundOnDropFamilyDsctAmount" />
+                <ScalarProperty Name="RefundOnDropBilingualDsctAmount" ColumnName="RefundOnDropBilingualDsctAmount" />
+                <ScalarProperty Name="TotalBalanceAmount" ColumnName="TotalBalanceAmount" />
+                <ScalarProperty Name="InvoiceNotes" ColumnName="InvoiceNotes" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="PaymentUID" ColumnName="PaymentUID" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="ObligationID" ColumnName="ObligationID" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="Checknum" ColumnName="Checknum" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
+                <ScalarProperty Name="ProcessedDate" ColumnName="ProcessedDate" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="ConfirmedDate" ColumnName="ConfirmedDate" />
+                <ScalarProperty Name="ConfirmedByID" ColumnName="ConfirmedByID" />
+                <ScalarProperty Name="CampusID" ColumnName="CampusID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ChineseName" ColumnName="ChineseName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="PersonType" ColumnName="PersonType" />
+                <ScalarProperty Name="CreationDt" ColumnName="CreationDt" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsOnEmailList" ColumnName="IsOnEmailList" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="IsNewStudent" ColumnName="IsNewStudent" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Refunds">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Refund">
+              <MappingFragment StoreEntitySet="Refund">
+                <ScalarProperty Name="RefundID" ColumnName="RefundID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Checknum" ColumnName="Checknum" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ProcessedDate" ColumnName="ProcessedDate" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="ClassroomID" ColumnName="ClassroomID" />
+                <ScalarProperty Name="HccsRoleID" ColumnName="HccsRoleID" />
+                <ScalarProperty Name="TextbookID" ColumnName="TextbookID" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="ClassNameEnglish" ColumnName="ClassNameEnglish" />
+                <ScalarProperty Name="ClassNameChinese" ColumnName="ClassNameChinese" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="ClassTime" ColumnName="ClassTime" />
+                <ScalarProperty Name="Classstarttime" ColumnName="Classstarttime" />
+                <ScalarProperty Name="Classendtime" ColumnName="Classendtime" />
+                <ScalarProperty Name="WaitinglistLimit" ColumnName="WaitinglistLimit" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Textbooks">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Textbook">
+              <MappingFragment StoreEntitySet="Textbook">
+                <ScalarProperty Name="TextbookID" ColumnName="TextbookID" />
+                <ScalarProperty Name="BookTitleEnglish" ColumnName="BookTitleEnglish" />
+                <ScalarProperty Name="BookTitleChinese" ColumnName="BookTitleChinese" />
+                <ScalarProperty Name="BookVersionEnglish" ColumnName="BookVersionEnglish" />
+                <ScalarProperty Name="BookVersionChinese" ColumnName="BookVersionChinese" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deadlines">
+            <EntityTypeMapping TypeName="HccsWebDBModel.Deadline">
+              <MappingFragment StoreEntitySet="Deadline">
+                <ScalarProperty Name="DeadlineType" ColumnName="DeadlineType" />
+                <ScalarProperty Name="DeadlineDt" ColumnName="DeadlineDt" />
+                <ScalarProperty Name="Schoolyear" ColumnName="Schoolyear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Account">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Account">
+              <MappingFragment StoreEntitySet="h_Account">
+                <ScalarProperty Name="h_Account_id" ColumnName="h_Account_id" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="AccountConfirmedDt" ColumnName="AccountConfirmedDt" />
+                <ScalarProperty Name="AccountStatus" ColumnName="AccountStatus" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ConfirmationCode" ColumnName="ConfirmationCode" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Enrollment">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Enrollment">
+              <MappingFragment StoreEntitySet="h_Enrollment">
+                <ScalarProperty Name="h_Enrollment_id" ColumnName="h_Enrollment_id" />
+                <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="RegistrationFeeAmount" ColumnName="RegistrationFeeAmount" />
+                <ScalarProperty Name="EnrollmentStartDate" ColumnName="EnrollmentStartDate" />
+                <ScalarProperty Name="TuitionAmount" ColumnName="TuitionAmount" />
+                <ScalarProperty Name="TuitionProrate" ColumnName="TuitionProrate" />
+                <ScalarProperty Name="MiddlewayTuitionDiscount" ColumnName="MiddlewayTuitionDiscount" />
+                <ScalarProperty Name="EcOrTeacherTuitionDiscount" ColumnName="EcOrTeacherTuitionDiscount" />
+                <ScalarProperty Name="FinalTuitionAmount" ColumnName="FinalTuitionAmount" />
+                <ScalarProperty Name="TextbookAmount" ColumnName="TextbookAmount" />
+                <ScalarProperty Name="TextbookNeeded" ColumnName="TextbookNeeded" />
+                <ScalarProperty Name="RefundOnDropRegFeeAmount" ColumnName="RefundOnDropRegFeeAmount" />
+                <ScalarProperty Name="RefundOnDropTuitionAmount" ColumnName="RefundOnDropTuitionAmount" />
+                <ScalarProperty Name="RefundOnDropTextbookAmount" ColumnName="RefundOnDropTextbookAmount" />
+                <ScalarProperty Name="HccAmount" ColumnName="HccAmount" />
+                <ScalarProperty Name="CcbcAmount" ColumnName="CcbcAmount" />
+                <ScalarProperty Name="RegistrationStatus" ColumnName="RegistrationStatus" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Hccsrole">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Hccsrole">
+              <MappingFragment StoreEntitySet="h_Hccsrole">
+                <ScalarProperty Name="h_Hccsrole_id" ColumnName="h_Hccsrole_id" />
+                <ScalarProperty Name="HCCSRoleID" ColumnName="HCCSRoleID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="HccsRole" ColumnName="HccsRole" />
+                <ScalarProperty Name="Schoolyear" ColumnName="Schoolyear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="HccsTitleEnglish" ColumnName="HccsTitleEnglish" />
+                <ScalarProperty Name="HccsTitleChinese" ColumnName="HccsTitleChinese" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Invoice">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Invoice">
+              <MappingFragment StoreEntitySet="h_Invoice">
+                <ScalarProperty Name="h_Invoice_id" ColumnName="h_Invoice_id" />
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="InvoiceDt" ColumnName="InvoiceDt" />
+                <ScalarProperty Name="Schoolyear" ColumnName="Schoolyear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="FamilyDiscountCount" ColumnName="FamilyDiscountCount" />
+                <ScalarProperty Name="FamilyDiscount" ColumnName="FamilyDiscount" />
+                <ScalarProperty Name="BilingualDiscountCount" ColumnName="BilingualDiscountCount" />
+                <ScalarProperty Name="BilingualDiscount" ColumnName="BilingualDiscount" />
+                <ScalarProperty Name="TotalInvoiceAmount" ColumnName="TotalInvoiceAmount" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="PaymentDt" ColumnName="PaymentDt" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="RefundOnDropFamilyDsctAmount" ColumnName="RefundOnDropFamilyDsctAmount" />
+                <ScalarProperty Name="RefundOnDropBilingualDsctAmount" ColumnName="RefundOnDropBilingualDsctAmount" />
+                <ScalarProperty Name="TotalBalanceAmount" ColumnName="TotalBalanceAmount" />
+                <ScalarProperty Name="InvoiceNotes" ColumnName="InvoiceNotes" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Payment">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Payment">
+              <MappingFragment StoreEntitySet="h_Payment">
+                <ScalarProperty Name="h_Payment_id" ColumnName="h_Payment_id" />
+                <ScalarProperty Name="PaymentUID" ColumnName="PaymentUID" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="ObligationID" ColumnName="ObligationID" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="Checknum" ColumnName="Checknum" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
+                <ScalarProperty Name="ProcessedDate" ColumnName="ProcessedDate" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="ConfirmedDate" ColumnName="ConfirmedDate" />
+                <ScalarProperty Name="ConfirmedByID" ColumnName="ConfirmedByID" />
+                <ScalarProperty Name="CampusID" ColumnName="CampusID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Person">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Person">
+              <MappingFragment StoreEntitySet="h_Person">
+                <ScalarProperty Name="h_Person_id" ColumnName="h_Person_id" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ChineseName" ColumnName="ChineseName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="PersonType" ColumnName="PersonType" />
+                <ScalarProperty Name="CreationDt" ColumnName="CreationDt" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsOnEmailList" ColumnName="IsOnEmailList" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="IsNewStudent" ColumnName="IsNewStudent" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Refund">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Refund">
+              <MappingFragment StoreEntitySet="h_Refund">
+                <ScalarProperty Name="h_Refund_id" ColumnName="h_Refund_id" />
+                <ScalarProperty Name="RefundID" ColumnName="RefundID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Checknum" ColumnName="Checknum" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ProcessedDate" ColumnName="ProcessedDate" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Schedule">
+            <EntityTypeMapping TypeName="HccsWebDBModel.h_Schedule">
+              <MappingFragment StoreEntitySet="h_Schedule">
+                <ScalarProperty Name="h_Schedule_id" ColumnName="h_Schedule_id" />
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="ClassroomID" ColumnName="ClassroomID" />
+                <ScalarProperty Name="HccsRoleID" ColumnName="HccsRoleID" />
+                <ScalarProperty Name="TextbookID" ColumnName="TextbookID" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="ClassNameEnglish" ColumnName="ClassNameEnglish" />
+                <ScalarProperty Name="ClassNameChinese" ColumnName="ClassNameChinese" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="ClassTime" ColumnName="ClassTime" />
+                <ScalarProperty Name="Classstarttime" ColumnName="Classstarttime" />
+                <ScalarProperty Name="Classendtime" ColumnName="Classendtime" />
+                <ScalarProperty Name="WaitinglistLimit" ColumnName="WaitinglistLimit" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedByID" ColumnName="UpdatedByID" />
+                <ScalarProperty Name="h_created_date" ColumnName="h_created_date" />
+                <ScalarProperty Name="h_action_flag" ColumnName="h_action_flag" />
+                <ScalarProperty Name="h_user_id" ColumnName="h_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

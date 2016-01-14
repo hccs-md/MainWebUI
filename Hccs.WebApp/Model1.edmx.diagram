@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c6b52c01b8f44882800e4e3975082dba" Name="Diagram1">
+        <EntityTypeShape EntityType="HccsWebDBModel.Account" Width="1.5" PointX="7" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Campus" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Classroom" Width="1.5" PointX="3.75" PointY="11.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Course" Width="1.5" PointX="1.5" PointY="12" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Enrollment" Width="1.5" PointX="5.125" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Hccsrole" Width="1.5" PointX="2.375" PointY="9.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Invoice" Width="1.5" PointX="9.75" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Payment" Width="1.5" PointX="9.75" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Person" Width="1.5" PointX="2.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Refund" Width="1.5" PointX="9.75" PointY="3.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Schedule" Width="1.5" PointX="7.625" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Textbook" Width="1.5" PointX="1.5" PointY="12.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.Deadline" Width="1.5" PointX="2.625" PointY="0.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Account" Width="1.5" PointX="5.875" PointY="0.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Enrollment" Width="1.5" PointX="11.125" PointY="0.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Hccsrole" Width="1.5" PointX="7.625" PointY="0.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Invoice" Width="1.5" PointX="12.75" PointY="0.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Payment" Width="1.5" PointX="5.875" PointY="1.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Person" Width="1.5" PointX="7.625" PointY="1.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Refund" Width="1.5" PointX="9.375" PointY="0.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="HccsWebDBModel.h_Schedule" Width="1.5" PointX="9.375" PointY="1.125" IsExpanded="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Account_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Invoice_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Payment_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Refund_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Classroom_Campus" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Schedule_Classroom" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Schedule_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Enrollment_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Enrollment_Schedule" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Hccsrole_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Schedule_Teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="HccsWebDBModel.FK_Schedule_Textbook" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

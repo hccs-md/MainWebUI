@@ -104,8 +104,7 @@ namespace Hccs.WebApp.Models
         {
             var user = new ApplicationUser()
             {
-                FirstName = this.FirstName,
-                LastName = this.LastName,
+                Person = new Person { FirstName = this.FirstName, LastName = this.LastName, PersonType = 0 },
                 Email = this.Email,
                 PhoneNumber = this.Phone,
                 UserName = string.Concat(this.FirstName, ", ", this.LastName).Humanize(LetterCasing.Title)

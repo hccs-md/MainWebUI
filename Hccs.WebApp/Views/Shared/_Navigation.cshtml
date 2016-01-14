@@ -15,6 +15,7 @@
     <ul class="nav navbar-right top-nav">
         @if (Request.IsAuthenticated)
         {
+            
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> @User.Identity.Name <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -36,14 +37,28 @@
                     <a href="@(Html.BuildUrlFromExpression<FamilyController>(c => c.Index()))"><i class="fa fa-fw fa-dashboard"></i> My Family</a>
                 </li>
                 @*<li>
-                    <a href="@(Html.BuildUrlFromExpression<FamilyMemberController>(c => c.Index()))"><i class="fa fa-fw fa-users"></i> Family Members</a>
-                </li>*@
+                <a href="@(Html.BuildUrlFromExpression<FamilyMemberController>(c => c.Index()))"><i class="fa fa-fw fa-users"></i> Family Members</a>
+            </li>*@
                 <li>
                     <a href="@(Html.BuildUrlFromExpression<FamilyController>(c => c.Invoice()))"><i class="fa fa-fw fa-dollar"></i> Invoices</a>
                 </li>
                 @*<li>
-                    <a href="@(Html.BuildUrlFromExpression<NotificationController>(c => c.Index()))"><i class="fa fa-fw fa-inbox"></i> Notifications</a>
-                </li>*@
+                <a href="@(Html.BuildUrlFromExpression<NotificationController>(c => c.Index()))"><i class="fa fa-fw fa-inbox"></i> Notifications</a>
+            </li>*@
+                @if (User.IsInRole("Teacher"))
+                {
+                    <li class="divider"></li>
+                    <li><i class="fa fa-list"></i> My Classes</li>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="divider"></li>
+                    <li><i class="fa fa-users"></i> Manage Users</li>
+                    <li><i class="fa fa-edit"></i> Manage Courses</li>
+                    <li><i class="fa fa-book"></i> Manage Textbooks</li>
+                    <li><i class="fa fa-money"></i> Manage Inovices</li>
+                    <li><i class="fa fa-cogs"></i> Manage Schedule</li>
+                }
             </ul>
         </div>
 		<!-- /.navbar-collapse -->

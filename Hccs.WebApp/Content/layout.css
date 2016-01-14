@@ -80,9 +80,11 @@ textarea {
 }
 
 .ng-hide-remove {
-  -webkit-transition:0.3s linear opacity;
-  transition:0.3s linear opacity;
-  opacity:1;
+    -webkit-transition: 0.3s linear opacity;
+    -moz-transition: 0.3s linear opacity;
+    -o-transition: 0.3s linear opacity;
+    transition: 0.3s linear opacity;
+    opacity: 1;
 }
 
 .ng-hide {
@@ -98,4 +100,16 @@ textarea {
 }
 .has-feedback ng-transclude ~ input-validation-icons .form-control-feedback{
     top: 26px;
+}
+.navbar-nav .divider-vertical {
+    height: 40px;
+    margin: 0 9px;
+    border-left: 1px solid #f2f2f2;
+    border-right: 1px solid #ffffff;
+}
+.navbar-nav .divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #E5E5E5;
 }

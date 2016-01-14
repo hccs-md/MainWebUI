@@ -8,14 +8,15 @@ namespace Hccs.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string campus)
+        public ActionResult Index(string campus = null)
         {
             if (string.IsNullOrEmpty(campus))
             {
                 return View();
             }
-
-            HttpContext.Session["__CAMPUS"] = campus;
+            else {
+                HttpContext.Session["__CAMPUS"] = campus;
+            }
 
             if (campus.Equals("ccbc", StringComparison.InvariantCultureIgnoreCase))
             {
