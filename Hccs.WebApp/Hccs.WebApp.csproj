@@ -75,6 +75,14 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=4.0.1.318, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.4.0.1.318\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -207,8 +215,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Data\CourseRepository.cs" />
+    <Compile Include="Data\ICourseRepository.cs" />
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -216,11 +227,11 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Campus.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Campu.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Classroom.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Classroom.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FamilyController.cs" />
@@ -234,22 +245,37 @@
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
-    <Compile Include="Course.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Course.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\GmailService.cs" />
     <Compile Include="Data\IFamilyRepository.cs" />
-    <Compile Include="Deadline.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Deadline.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Enrollment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Enrollment.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hccsrole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\HCCSDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HCCSDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HCCSDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HCCSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HCCSDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HCCSDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Hccsrole.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AngularHelper.cs" />
     <Compile Include="Helpers\AngularModelHelper.cs" />
@@ -257,58 +283,20 @@
     <Compile Include="Helpers\GridTag.cs" />
     <Compile Include="Helpers\JsonHtmlHelpers.cs" />
     <Compile Include="Helpers\UIRatingTag.cs" />
-    <Compile Include="h_Account.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="h_Enrollment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="h_Hccsrole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="h_Invoice.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="h_Payment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="h_Person.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="h_Refund.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="h_Schedule.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructures\BetterJsonResult.cs" />
     <Compile Include="Infrastructures\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructures\IMapFrom.cs" />
     <Compile Include="Infrastructures\IMapTo.cs" />
     <Compile Include="Infrastructures\JsonExtensions.cs" />
-    <Compile Include="Invoice.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\HCCSVMs.cs" />
+    <Compile Include="Models\Invoice.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201512220316257_Init.cs" />
     <Compile Include="Migrations\201512220316257_Init.Designer.cs">
       <DependentUpon>201512220316257_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddPersonForm.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -320,22 +308,25 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PersonEnrollmentViewModel.cs" />
     <Compile Include="Models\PersonForm.cs" />
-    <Compile Include="Payment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Payment.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Person.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Refund.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Refund.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Schedule.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Schedule.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Textbook.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Textbook.cs">
+      <DependentUpon>HCCSDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -348,6 +339,7 @@
     <Content Include="Content\Images\ccbc-campus.jpg" />
     <Content Include="Content\Images\hcc-campus.jpg" />
     <Content Include="Content\layout.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\sb-admin-rtl.css" />
     <Content Include="Content\sb-admin.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
@@ -367,6 +359,16 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Models\HCCSDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HCCSDB.edmx</DependentUpon>
+      <LastGenOutput>HCCSDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\HCCSDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HCCSDB.edmx</DependentUpon>
+      <LastGenOutput>HCCSDB.cs</LastGenOutput>
+    </Content>
     <Content Include="js\app\authentication\LoginController.js" />
     <Content Include="js\app\person\EditPersonDirective.js" />
     <Content Include="js\app\utility\ArrayExtensions.js" />
@@ -374,16 +376,6 @@
     <Content Include="js\app\utility\InputValidationIconsDirective.js" />
     <Content Include="js\app\utility\MvcGridDirective.js" />
     <Content Include="js\app\utility\ParseDateFilter.js" />
-    <Content Include="Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
@@ -412,19 +404,19 @@
     <Content Include="js\app\person\templates\addPerson.cshtml" />
     <Content Include="js\app\person\templates\editPerson.tmpl.cshtml" />
     <Content Include="js\app\person\templates\personDetails.tmpl.cshtml" />
+    <EntityDeploy Include="Models\HCCSDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HCCSDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\HCCSDB.edmx.diagram">
+      <DependentUpon>HCCSDB.edmx</DependentUpon>
+    </Content>
     <None Include="js\app\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="js\app\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <EntityDeploy Include="Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="js\app\app.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -508,6 +500,9 @@
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="SecretConnectionStrings.config" />
+    <Content Include="Views\Register\Index.cshtml">
+      <BrowseToURL>~/Register/Index</BrowseToURL>
+    </Content>
     <None Include="Web.Secrets.config" />
   </ItemGroup>
   <ItemGroup>

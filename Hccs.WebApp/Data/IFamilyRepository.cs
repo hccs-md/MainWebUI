@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hccs.WebApp.Models;
 
 namespace Hccs.WebApp.Data
 {
